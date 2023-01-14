@@ -72,4 +72,12 @@ public class BoardRepositoryTests {
 		//Page<T>에서 정의했던, List<T> 타입 꺼내는구나
 		todoList.forEach(board -> log.info(board));
 	}
+	
+	//querydsl test
+	@Test
+	public void testSearch1() {
+		//2 page order by bno desc
+		Pageable pageable = PageRequest.of(1, 10, Sort.by("bno").descending());
+		boardRepository.search1(pageable);
+	}
 }
