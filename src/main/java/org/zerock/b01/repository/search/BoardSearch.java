@@ -8,4 +8,6 @@ public interface BoardSearch {
 	
 	Page<Board> search1(Pageable pageable);
 
+	//검색 조건(types)를 지정하고 keyword로 검색하기
+	Page<Board> searchAll(String[] types,String keyword,Pageable pageable);
 }
