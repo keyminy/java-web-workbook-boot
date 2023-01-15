@@ -1,6 +1,8 @@
 package org.zerock.b01.service;
 
 import org.zerock.b01.dto.BoardDTO;
+import org.zerock.b01.dto.PageRequestDTO;
+import org.zerock.b01.dto.PageResponseDTO;
 
 public interface BoardService {
 	//등록하기
@@ -11,4 +13,7 @@ public interface BoardService {
 	void modify(BoardDTO boardDTO);
 	//삭제
 	void remove(Long bno);
+	
+	//목록/검색 기능
+	PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO);
 }
