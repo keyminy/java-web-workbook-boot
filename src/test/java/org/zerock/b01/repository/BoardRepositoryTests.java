@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.zerock.b01.domain.Board;
+import org.zerock.b01.domain.BoardImage;
 import org.zerock.b01.dto.BoardListReplyCountDTO;
 
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +27,9 @@ public class BoardRepositoryTests {
 
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	@Test
 	public void testInsert() {
@@ -135,5 +142,70 @@ public class BoardRepositoryTests {
 			board.addImage(UUID.randomUUID().toString(), "file"+i+".jpg");
 		}//end for
 		boardRepository.save(board);
+	}
+	
+	@Test
+	public void testReadWithImages() {
+		//반드시 존재하는 bno로 확인해야합니다.
+		//Optional<Board> result = boardRepository.findById(5L);
+		Optional<Board> result = boardRepository.findByIdWithImages(5L);
+		Board board = result.orElseThrow();
+		log.info(board);
+		log.info("----------------------");
+		for(BoardImage boardImage : board.getImageSet()) {
+			log.info(boardImage);			
+		}
+	}
+	
+	//특정 게시물의 첨부파일을 다른 파일로 수정
+	@Transactional
+	@Commit
+	@Test
+	public void testModifyImages() {
+		Optional<Board> result = boardRepository.findByIdWithImages(6L);
+		Board board = result.orElseThrow();
+		
+		//기존의 첨부파일들은 삭제
+		board.clearImages();
+		
+		//새로운 첨부파일들 추가
+		for(int i=0;i<2;i++) {
+			board.addImage(UUID.randomUUID().toString(),"updatefile"+i+".jpg");
+		}
+		boardRepository.save(board);
+	}
+	
+	@Test
+	@Commit
+	@Transactional
+	public void testRemoveAll() {
+		Long bno = 5L;
+		replyRepository.deleteByBoard_bno(bno);
+		boardRepository.deleteById(bno);
+	}
+	
+	@Test
+	public void testInsertAll() {
+		for(int i=1; i<=100; i++) {
+			Board board = Board.builder()
+					.title("Title.."+i)
+					.content("Content.."+i)
+					.writer("writer.."+i)
+					.build();
+			for(int j=0; j<3; j++) {
+				if(i % 5 == 0) {
+					continue;
+				}
+				board.addImage(UUID.randomUUID().toString(),i+"file"+j+".jpg");
+			}
+			boardRepository.save(board);
+		}//end for i
+	}
+	
+	@Transactional
+	@Test
+	public void testSearchImageReplyCount() {
+		Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+		boardRepository.searchWithAll(null, null, pageable);
 	}
 }

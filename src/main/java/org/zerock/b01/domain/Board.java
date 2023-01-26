@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,8 +44,10 @@ public class Board extends BaseEntity{
 	//연관관계의 주인은 BoardImage의 board
 	@OneToMany(mappedBy = "board"
 			,cascade = {CascadeType.ALL}
-			,fetch = FetchType.LAZY) 
+			,fetch = FetchType.LAZY
+			,orphanRemoval = true) 
 	@Builder.Default
+	@BatchSize(size = 20)
 	private Set<BoardImage> imageSet = new HashSet<>();
 	
 	public void addImage(String uuid,String fileName) {

@@ -118,4 +118,21 @@ implements BoardSearch {
 		return new PageImpl<BoardListReplyCountDTO>(dtoList,pageable,count);
 	}
 
+	@Override
+	public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+		QBoard board = QBoard.board;
+		QReply reply = QReply.reply;
+		
+		JPQLQuery<Board> boardJPQLQuery = from(board);
+		boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));//left join
+		
+		getQuerydsl().applyPagination(pageable, boardJPQLQuery); //paging
+		List<Board> boardList = boardJPQLQuery.fetch(); //JPQL쿼리 실행
+		boardList.forEach(board1 -> {
+			System.out.println(board1.getBno());
+			System.out.println(board1.getImageSet());
+			System.out.println("------------------------");
+		});
+		return null;
+	}
 }

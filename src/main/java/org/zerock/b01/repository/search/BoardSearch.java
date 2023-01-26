@@ -15,4 +15,8 @@ public interface BoardSearch {
 	Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types
 													,String keyword
 													,Pageable pageable);
+	/* N+1문제(p.628~) */
+	Page<BoardListReplyCountDTO> searchWithAll(String[] types
+											,String keyword
+											,Pageable pageable);
 }
