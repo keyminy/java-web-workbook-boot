@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.dto.BoardDTO;
+import org.zerock.b01.dto.BoardListAllDTO;
 import org.zerock.b01.dto.BoardListReplyCountDTO;
 import org.zerock.b01.dto.PageRequestDTO;
 import org.zerock.b01.dto.PageResponseDTO;
@@ -93,6 +94,12 @@ public class BoardServiceImpl implements BoardService {
 					.total((int)result.getTotalElements())
 					.build();
 	
+	}
+
+	@Override
+	public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
