@@ -52,6 +52,8 @@ public class BoardController {
 			return "redirect:/board/register";
 		}
 		log.info(boardDTO);
+		/*BoardDTO(bno=null, title=ㅂㅈㄷㅂㅈㄷㅅ, content=ㅂㄷㅅㅂㄷㅅ, writer=ㅂㄷㅅㅄㄷ, regDate=null, modDate=null
+		 * , fileNames=[fcb90314-4c27-4229-adc2-1113a41f163e_직업관.JPG, 992d204c-0b5f-4ddd-8079-f2d7e93acb05_캡처.JPG])*/
 		Long bno = boardService.register(boardDTO);
 		//아.. bno를 리턴하는 이유가, 등록 후 그 bno값을 "잠깐" view에 남기기 위해서
 		redirectAttributes.addFlashAttribute("result",bno);

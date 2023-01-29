@@ -38,7 +38,7 @@
 						</div>
 						<div class="my-4">
 							<div class="float-end">
-								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="submit" class="btn btn-primary submitBtn">Submit</button>
 								<button type="reset" class="btn btn-secondary">Reset</button>
 							</div>
 						</div>
@@ -157,4 +157,26 @@
 				targetDiv.remove();
 			});
 	}
+	
+	/* 게시물 등록 버튼 클릭 시, 업로드 된 파일들의 정보를 <form>태그에 추가하여
+	submit()하도록 한다. */
+	document.querySelector(".submitBtn").addEventListener("click",function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		
+		const target = document.querySelector(".uploadHidden");
+		const uploadFiles = uploadResult.querySelectorAll("img");
+		//console.log(uploadFiles);//NodeList(2) [img, img]
+		let str = '';
+		for(let i=0; i< uploadFiles.length; i++){
+			const uploadFile = uploadFiles[i];
+			const imgLink = uploadFile.getAttribute("data-src");
+			// src 속성에 오류가 있넹.. 
+			//src : "http://localhost:8085/view/s_12cc51dd-34cc-481f-91c3-24ab170b587b_doit%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98.jpg"
+			//<form>태그에, input값 추가해주기
+			str += `<input type='hidden' name='fileNames' value="${imgLink}">`;
+		}
+		target.innerHTML = str;
+		document.querySelector("form").submit();
+	});
 </script>
