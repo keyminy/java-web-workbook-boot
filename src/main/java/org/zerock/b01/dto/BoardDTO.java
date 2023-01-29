@@ -1,6 +1,7 @@
 package org.zerock.b01.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -31,4 +32,7 @@ public class BoardDTO {
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+    
+    //첨부파일의 이름들
+    private List<String> fileNames;
 }
