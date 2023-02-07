@@ -51,6 +51,10 @@ public class CustomSecurityConfig {
 	    //403에러 handler
 	    http.exceptionHandling()
 	    	.accessDeniedHandler(accessDeniedHandler());
+	    
+	    /* oauth 설정 */
+	    http.oauth2Login()
+	    	.loginPage("/member/login");
 		
 		return http.build();	
 	}

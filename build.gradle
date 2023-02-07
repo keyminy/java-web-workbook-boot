@@ -64,6 +64,8 @@ dependencies {
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    //OAuth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     //thymeleaf에서 security인증정보 처리
    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
