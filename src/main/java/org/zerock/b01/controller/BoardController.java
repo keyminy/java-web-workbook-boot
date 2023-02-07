@@ -72,6 +72,7 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	@PreAuthorize("isAuthenticated()") //로그인한 사용자만으로 제한
 	@GetMapping({"/read","/modify"})
 	public void read(Long bno,PageRequestDTO pageRequestDTO, Model model) {
 		BoardDTO boardDTO = boardService.readOne(bno);
@@ -81,6 +82,7 @@ public class BoardController {
 	
 	//수정 후에는, 기존의 검색 조건에 안 맞을 수 있으므로,
 	//수정 후에는 검색 조건 없이 단순히 조회(read)화면으로 이동하게 구현
+	@PreAuthorize("principal.username == #boardDTO.writer")
 	@PostMapping("/modify")
 	public String modify(PageRequestDTO pageRequestDTO,
 						@Valid BoardDTO boardDTO,
@@ -101,6 +103,7 @@ public class BoardController {
 		return "redirect:/board/read";
 	}
 	
+	@PreAuthorize("principal.username == #boardDTO.writer")
 	@PostMapping("/remove")
 	public String remove(BoardDTO boardDTO,RedirectAttributes redirectAttributes) {
 		log.info("remove post.." + boardDTO.getBno());
