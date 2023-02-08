@@ -24,6 +24,20 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+                    <!-- 로그인 로그아웃 -->
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" 
+                    	sec:authorize="isAnonymous()" th:href="@{/member/login}">
+                    	로그인
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" 
+                    	sec:authorize="isAuthenticated()" th:href="@{/logout}">
+                    	로그아웃
+                    </a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" 
+                    	sec:authorize="isAuthenticated()" th:if="${#authentication.principal.social}" 
+                    	th:href="@{https://kauth.kakao.com/oauth/logout?client_id=6103b18f60d1fbb09f931ab0eb2ec67b&logout_redirect_uri=http://localhost:8085/logout}">
+                    	소셜 로그아웃
+                    </a>
                 </div>
             </div>
             <!-- Page content wrapper-->

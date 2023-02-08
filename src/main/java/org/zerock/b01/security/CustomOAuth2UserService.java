@@ -97,7 +97,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
 						,member.getMpw()
 						,member.getEmail()
 						,member.isDel()
-						,false
+						,member.isSocial()
 						,member.getRoleSet()
 							.stream().map(memberRole -> new SimpleGrantedAuthority("ROLE_"+memberRole.name()))
 							.collect(Collectors.toList())

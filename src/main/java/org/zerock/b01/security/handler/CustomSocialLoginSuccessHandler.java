@@ -28,18 +28,20 @@ public class CustomSocialLoginSuccessHandler implements
 		log.info("CustomLoginSuccessHandler onAuthenticationSuccess........");
 		log.info(authentication.getPrincipal());
 		MemberSecurityDTO memberSecurityDTO = (MemberSecurityDTO)authentication.getPrincipal();
-		String encodedPw = memberSecurityDTO.getMpw();
-		
+		System.out.println("되라 ㅠㅠ");
+		System.out.println(memberSecurityDTO.isSocial());
+		System.out.println("왜?? : " + memberSecurityDTO);
 		//소셜 로그인이고 회원의 패스워드가 1111
-		if(memberSecurityDTO.isSocial()
-				&& (memberSecurityDTO.getMpw().equals("1111")
-						|| passwordEncoder.matches("1111", memberSecurityDTO.getMpw())
-						)) {
+		 if (memberSecurityDTO.isSocial()
+	                && (memberSecurityDTO.getMpw().equals("54321")
+	                    ||  passwordEncoder.matches("54321", memberSecurityDTO.getMpw())
+	        )) {
 			log.info("Should Change Password");
 			log.info("Redirect to Member Modify");
 			response.sendRedirect("/member/modify");
 			return;
 		}else {
+			System.out.println("적용 되고 있음??");
 			response.sendRedirect("/board/list");
 		}
 	}

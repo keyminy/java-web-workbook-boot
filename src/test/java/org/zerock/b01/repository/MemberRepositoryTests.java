@@ -52,6 +52,8 @@ public class MemberRepositoryTests {
 	@Test
 	@Commit
 	public void testUpdate() {
-		
+		String mid = "xxx@kakao.com";
+		String mpw = passwordEncoder.encode("54321");
+		memberRepository.updatePassword(mpw, mid);
 	}
 }
