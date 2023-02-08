@@ -49,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 							.stream().map(memberRole -> new SimpleGrantedAuthority("ROLE_"+memberRole.name()))
 							.collect(Collectors.toList())
 						);
-		log.info("memberSecurityDTO " + memberSecurityDTO);
+		log.info("memberSecurityDTO : " + memberSecurityDTO);
 		return memberSecurityDTO;
 		/*
 		UserDetails userDetails = User.builder()
